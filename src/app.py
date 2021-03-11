@@ -29,10 +29,10 @@ def login():
         else: 
             raise Exception
 
-    except Exception as e:
-        return jsonify({"message": str(e)})
+    except:
+        #return jsonify({"message": str(e)})
 
-        """return make_response(jsonify({'message':'Login error, username or password are missing or not allowed.'}), 401)"""
+        return make_response(jsonify({'message':'Login error, username or password are missing or not allowed.'}), 401)
 
 
 if __name__ == '__main__':

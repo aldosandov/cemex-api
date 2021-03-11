@@ -2,6 +2,7 @@ import jwt
 from flask import jsonify, request
 import datetime
 from functools import wraps
+from security.admins import db
 
 
 def get_secret_key():
@@ -34,12 +35,14 @@ def get_params(args, token=False):
 
 
 def check_identity(username, password):
-    return True
+    if username in db["users"] and password in db["passwords"]:
+        return True
+    else:
+        return False
 
 
 def create_token(username, key):
-    token = jwt.encode({'user' : username, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(days=15)}, key, algorithm="HS256")
-    print(token)
+    token = jwt.encode({'user' : username, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(hours=1)}, key, algorithm="HS256")
 
     return token
 
