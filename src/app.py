@@ -1,29 +1,38 @@
 from flask import Flask, request, jsonify, make_response
-from utils import get_params
+from utils import *
 
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = get_secret_key()
 
 
 @app.route("/predict/")
+@token_required
 def predict():
     try:
         hardness, prod_rate, quality = get_params(request.args)
         return f'dureza: {hardness}, prod_rate: {prod_rate}, calidad: {quality}'
 
     except Exception as e:
-        #print(isinstance(e, SyntaxError))
         return make_response(jsonify({"message": str(e)}), 400)
 
 
 @app.route('/login', methods=['POST'])
 def login():
-    params = request.get_json()
-    username = params['username']
-    password = params['password']
-    
-    # https://www.youtube.com/watch?v=J5bIPtEbS0Q&t=495s
-    return jsonify({"token": "13565456"})
+    try:
+        params = request.get_json()
+        username = params['username']
+        password = params['password']
+
+        if check_identity(username, password):
+            return jsonify({'token' : create_token(username, app.config['SECRET_KEY'])})
+        else: 
+            raise Exception
+
+    except Exception as e:
+        return jsonify({"message": str(e)})
+
+        """return make_response(jsonify({'message':'Login error, username or password are missing or not allowed.'}), 401)"""
 
 
 if __name__ == '__main__':
