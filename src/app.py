@@ -15,7 +15,16 @@ def predict():
         #print(isinstance(e, SyntaxError))
         return make_response(jsonify({"message": str(e)}), 400)
 
+
+@app.route('/login', methods=['POST'])
+def login():
+    params = request.get_json()
+    username = params['username']
+    password = params['password']
     
+    # https://www.youtube.com/watch?v=J5bIPtEbS0Q&t=495s
+    return jsonify({"token": "13565456"})
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=4000)
