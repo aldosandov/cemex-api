@@ -11,7 +11,9 @@ app.config['SECRET_KEY'] = get_secret_key()
 def predict():
     try:
         hardness, prod_rate, quality = get_params(request.args)
-        return jsonify({"dureza": hardness, "prod_rate": prod_rate, "calidad": quality})
+        res = build_json(hardness, prod_rate, quality)
+
+        return jsonify(res)
 
     except Exception as e:
         return make_response(jsonify({"message": str(e)}), 400)
