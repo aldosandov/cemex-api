@@ -50,7 +50,10 @@ def create_token(username, key):
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = get_params(request.args, token=True)
+        try:
+            token = get_params(request.args, token=True)
+        except Exception as e:
+            return jsonify({'message' : str(e)}), 400
 
         if not token:
             return jsonify({'message' : 'Token is missing.'}), 403

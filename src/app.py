@@ -11,7 +11,7 @@ app.config['SECRET_KEY'] = get_secret_key()
 def predict():
     try:
         hardness, prod_rate, quality = get_params(request.args)
-        return f'dureza: {hardness}, prod_rate: {prod_rate}, calidad: {quality}'
+        return jsonify({"dureza": hardness, "prod_rate": prod_rate, "calidad": quality})
 
     except Exception as e:
         return make_response(jsonify({"message": str(e)}), 400)
@@ -30,8 +30,6 @@ def login():
             raise Exception
 
     except:
-        #return jsonify({"message": str(e)})
-
         return make_response(jsonify({'message':'Login error, username or password are missing or not allowed.'}), 401)
 
 
