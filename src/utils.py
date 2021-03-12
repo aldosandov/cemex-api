@@ -73,6 +73,10 @@ def token_required(f):
 def build_json(hardness, prod_rate, quality):
     scaled_params = scaler(hardness, prod_rate, quality)
     cluster = make_clustering()
+    cm = predict_cm(cluster, hardness, prod_rate, quality)
+    cm_95 = predict_cm_95(cluster, hardness, prod_rate, quality)
+    cmg = predict_cmg(cluster, hardness, prod_rate, quality)
+    cmg_95 = predict_cmg_95(cluster, hardness, prod_rate, quality)
     
 
     data = 
