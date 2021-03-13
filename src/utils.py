@@ -3,7 +3,7 @@ from flask import jsonify, request
 import datetime
 from functools import wraps
 from security.admins import db
-from models import *
+from models.models import *
 
 
 def get_secret_key():
@@ -72,104 +72,18 @@ def token_required(f):
 
 def build_json(hardness, prod_rate, quality):
     scaled_params = scaler(hardness, prod_rate, quality)
-    cluster = make_clustering()
-    cm = predict_cm(cluster, hardness, prod_rate, quality)
-    cm_95 = predict_cm_95(cluster, hardness, prod_rate, quality)
-    cmg = predict_cmg(cluster, hardness, prod_rate, quality)
-    cmg_95 = predict_cmg_95(cluster, hardness, prod_rate, quality)
-    
+    cluster = make_clustering(scaled_params)
+    cm = predict_cm(scaled_params, cluster)
+    cm_95 = predict_cm_95(scaled_params, cluster)
+    cmg = predict_cmg(scaled_params)
+    cmg_95 = predict_cmg_95(scaled_params)
 
-    data = 
-    {
-        "cluster" : int,
-        "CM": {
-            "SVR": {
-                "EE_TP": float,
-                "EC_TP": float,
-                "COSTO_TP": float,
-                "mse_interval": {
-                    "EE_TP": list,
-                    "EC_TP": list,
-                    "COSTO_TP": list
-                }
-            },
-            "RF":{
-                "EE_TP": float,
-                "EC_TP": float,
-                "COSTO_TP": float,
-                "mse_interval": {
-                    "EE_TP": list,
-                    "EC_TP": list,
-                    "COSTO_TP": list
-                }
-            }
-        },
-        "CM_95" : {
-            "SVR_95":{
-                "EE_TP": float,
-                "EC_TP": float,
-                "COSTO_TP": float,
-                "mse_interval": {
-                    "EE_TP": list,
-                    "EC_TP": list,
-                    "COSTO_TP": list
-                }
-            },
-            "RF_95":{
-                "EE_TP": float,
-                "EC_TP": float,
-                "COSTO_TP": float,
-                "mse_interval": {
-                    "EE_TP": list,
-                    "EC_TP": list,
-                    "COSTO_TP": list
-                }
-            }
-        },
-        "CMG" : {
-            "SVR":{
-                "EE_TP": float,
-                "EC_TP": float,
-                "COSTO_TP": float,
-                "mse_interval": {
-                    "EE_TP": list,
-                    "EC_TP": list,
-                    "COSTO_TP": list
-                }
-            },
-            "RF":{
-                "EE_TP": float,
-                "EC_TP": float,
-                "COSTO_TP": float,
-                "mse_interval": {
-                    "EE_TP": list,
-                    "EC_TP": list,
-                    "COSTO_TP": list
-                }
-            }
-        },
-        "CMG_95" : {
-            "SVR_95":{
-                "EE_TP": float,
-                "EC_TP": float,
-                "COSTO_TP": float,
-                "mse_interval": {
-                    "EE_TP": list,
-                    "EC_TP": list,
-                    "COSTO_TP": list
-                }
-            },
-            "RF_95": {
-                "EE_TP": float,
-                "EC_TP": float,
-                "COSTO_TP": float,
-                "mse_interval": {
-                    "EE_TP": list,
-                    "EC_TP": list,
-                    "COSTO_TP": list
-                }
-            }
-        }
+    data = {
+        "cluster": cluster,
+        "CM": cm,
+        "CM_95" : cm_95,
+        "CMG" : cmg,
+        "CMG_95" : cmg_95
     }
 
     return data
