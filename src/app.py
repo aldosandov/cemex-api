@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = get_secret_key()
 
 
-@app.route("/predict/")
+@app.route("/predict")
 @token_required
 def predict():
     try:

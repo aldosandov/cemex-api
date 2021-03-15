@@ -7,7 +7,7 @@ from models.models import *
 
 
 def get_secret_key():
-    file = open("src/security/secret_key.txt")
+    file = open("security/secret_key.txt")
     key = file.readline()
     return key 
 
@@ -43,7 +43,7 @@ def check_identity(username, password):
 
 
 def create_token(username, key):
-    token = jwt.encode({'user' : username, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(hours=1)}, key, algorithm="HS256")
+    token = jwt.encode({'user' : username, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(days=30)}, key, algorithm="HS256")
 
     return token
 
