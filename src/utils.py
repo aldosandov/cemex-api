@@ -3,11 +3,13 @@ from flask import jsonify, request
 import datetime
 from functools import wraps
 from security.admins import db
+from os import getcwd
 from models.models import *
 
 
 def get_secret_key():
-    file = open("security/secret_key.txt")
+    path = os.path.dirname(os.path.realpath(__file__)) + '/security/secret_key.txt'
+    file = open(path)
     key = file.readline()
     return key 
 
