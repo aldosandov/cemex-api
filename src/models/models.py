@@ -6,7 +6,7 @@ from sklearn.tree import DecisionTreeClassifier
 import numpy as np
 import os
 from joblib import load
-from errors import *
+from .errors import *
 
 
 cwd = os.path.dirname(os.path.realpath(__file__)) + '/persistence/'
@@ -26,7 +26,7 @@ def scaler(hardness, prod_rate, quality, inverse=False):
 def make_clustering(x):
     clustering = load(cwd + 'Clustering/CC.pkl')
     tmp = clustering.predict(x)
-    return tmp[0]
+    return int(tmp[0])
 
 
 def predict_cm(x, cluster):

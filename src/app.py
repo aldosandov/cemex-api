@@ -18,7 +18,7 @@ def predict():
         hardness, prod_rate, quality = get_params(request.args)
         res = build_json(hardness, prod_rate, quality)
 
-        return res
+        return jsonify(res)
 
     except Exception as e:
         return make_response(jsonify({"message": str(e)}), 400)
