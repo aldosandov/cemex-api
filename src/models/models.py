@@ -100,13 +100,3 @@ def make_pred_dict(x, svr, rf, error, cluster):
     }
 
     return response
-
-
-if __name__ == "__main__":
-    
-    #print(type(scaler), type(clustering))
-    x = scaler(100, 99, 0.035)
-    cluster = make_clustering(x)
-    print(cluster)
-    #y = predict_cm(x, cluster)
-    #print(y)

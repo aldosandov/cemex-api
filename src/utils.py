@@ -63,7 +63,6 @@ def token_required(f):
 
         try:
             data = jwt.decode(token, get_secret_key(), algorithms="HS256")
-            print(data)
         except:
             return jsonify({'message' : 'Token is invalid.'}), 403
 
@@ -79,6 +78,7 @@ def build_json(hardness, prod_rate, quality):
     cm_95 = predict_cm_95(scaled_params, cluster)
     cmg = predict_cmg(scaled_params)
     cmg_95 = predict_cmg_95(scaled_params)
+    print(cluster)
 
     data = {
         "cluster": cluster,
