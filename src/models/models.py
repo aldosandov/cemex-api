@@ -25,7 +25,7 @@ def scaler(hardness, prod_rate, quality, inverse=False):
 def make_clustering(x):
     clustering = load(cwd + 'Clustering/Agg.pkl')
     #tmp = clustering.predict(x)
-    return 1
+    return 4
 
 
 def predict_cm(x, cluster):
