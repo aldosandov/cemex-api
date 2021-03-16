@@ -2,10 +2,11 @@ from sklearn.svm import SVR
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.preprocessing._data import StandardScaler
+from sklearn.tree import DecisionTreeClassifier
 import numpy as np
 import os
 from joblib import load
-from .errors import *
+from errors import *
 
 
 cwd = os.path.dirname(os.path.realpath(__file__)) + '/persistence/'
@@ -23,9 +24,9 @@ def scaler(hardness, prod_rate, quality, inverse=False):
 
 
 def make_clustering(x):
-    clustering = load(cwd + 'Clustering/Agg.pkl')
-    #tmp = clustering.predict(x)
-    return 4
+    clustering = load(cwd + 'Clustering/CC.pkl')
+    tmp = clustering.predict(x)
+    return tmp[0]
 
 
 def predict_cm(x, cluster):
@@ -101,11 +102,11 @@ def make_pred_dict(x, svr, rf, error, cluster):
     return response
 
 
-"""if __name__ == "__main__":
+if __name__ == "__main__":
     
     #print(type(scaler), type(clustering))
-    #x = scaler(100, 99, 0.035)
-    #cluster = make_clustering(x)
-    print(mse_95)
+    x = scaler(100, 99, 0.035)
+    cluster = make_clustering(x)
+    print(cluster)
     #y = predict_cm(x, cluster)
-    #print(y)"""
+    #print(y)
